@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 //import Websocket from 'react-websocket';
-import BusImage from '../Assests/Bus.png';
+import BinImage from '../Assests/Bin.png';
+
+import Button from '@material-ui/core/Button';
+
+import { db } from '../Components/Firebase/Init';
 
 const mapStyles = {
     width: '100%',
@@ -14,11 +18,11 @@ class MapContainer extends Component {
         super(props);
 
         this.state = {
-            places: [
-                
-            ],
-            Markerlat: "Bus",
-            Markerlng: "",
+            places: [],
+            garbageType: [],
+            reportCount: [],
+            clickNum: ''
+
         }
     }
 
@@ -26,16 +30,17 @@ class MapContainer extends Component {
      { latitude: 6.053519, longitude: 80.220978 },
      { latitude: 7.8731, longitude: 80.7718 }, */
 
-    onMarkerClick = (props, marker, e, lat, lng) => {
-        console.log(this.state.Markerlat);
+    onMarkerClick = (props, marker, index) => {
+        //console.log(index);
         this.setState({
             activeMarker: marker,
-            showingInfoWindow: true
+            showingInfoWindow: true,
+            clickNum: index
         });
     }
 
     displayPlaces = () => {
-        console.log(this.state.places);
+        //console.log(this.state.places);
         return this.state.places.map((place, index) => {
             return <Marker
                 key={index}
@@ -44,36 +49,59 @@ class MapContainer extends Component {
                     lat: place.latitude,
                     lng: place.longitude
                 }}
-                icon={BusImage}
-                onClick={this.onMarkerClick} />
+                icon={BinImage}
+                onClick={(props, marker) => this.onMarkerClick(props, marker, index)} />
 
         })
     }
-
-    /* handleData(data) {
-        let result = JSON.parse(data);
-        console.log(result);
-        this.setState({
-            places: result,
-            //count: this.state.count + result.movement
-        });
-    } */
-    
-     componentDidMount() {
-        fetch('http://qualonsavy.herokuapp.com/api/tracker/getLiveData/Tr0')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    places: json,
-                })
+    deleteClick = () => {
+        console.log('clicked');
+        db.collection("gpsData")
+            .doc("WqHeSSl6u9ZDt290znah")
+            .delete()
+            .then(function () {
+                console.log("Document successfully deleted!");
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
             });
-    } 
+
+    }
+
+    componentDidMount() {
+        db.collection("gpsData")
+            .get()
+            .then(querySnapshot => {
+                const data = querySnapshot.docs.map(doc => doc.data());
+                //console.log(data);
+                const newLocationData = data.map(data => {
+                    return data.location;
+                });
+                const newGarbageTypeData = data.map(data => {
+                    return data.garbageType;
+                }); const newReportCountData = data.map(data => {
+                    return data.reportCount;
+                });
+                this.setState({
+                    places: [...newLocationData],
+                    garbageType: [...newGarbageTypeData],
+                    reportCount: [...newReportCountData]
+                }) // array of cities objects
+                //console.log(this.state.garbageType);
+            });
+    }
+    /*db.collection("cities")
+    .get()
+    .then(querySnapshot => {
+        const data = querySnapshot.docs.map(doc => doc.data());
+        console.log(data); // array of cities objects
+    });*/
+
 
     render() {
         return (
             <div>
                 {/* <Websocket url='ws://demos.kaazing.com/echo' // ws://qualonsavy.herokuapp.com/api/trackers/getAll
-                    onMessage={this.handleData.bind(this)}
+                    onMessage={ .handleData.bind(this)}
                 /> */}
                 <Map
                     google={this.props.google}
@@ -84,10 +112,26 @@ class MapContainer extends Component {
                     {this.displayPlaces()}
                     <InfoWindow
                         marker={this.state.activeMarker}
-                        visible={this.state.showingInfoWindow}>
+                        visible={this.state.showingInfoWindow}
+                    >
                         <div>
-                            <h1>{this.state.Markerlat}</h1>
+                            <div>
+                                Type of Garbage =
+                            {this.state.garbageType[this.state.clickNum]}
+
+                            </div>
+                            <div>
+                                Number of Reported  =
+                        {this.state.reportCount[this.state.clickNum]}
+                            </div>
+
+                            <button
+                                onClick={this.deleteClick}
+                            >
+                                Marked as Done
+                                </button>
                         </div>
+
                     </InfoWindow>
                 </Map>
             </div>

@@ -100,25 +100,25 @@ class PersistentDrawerLeft extends React.Component {
         id: 0, label: "Home", icon: <InboxIcon />, uri: ROUTES.HOME, open: false,
         children: []
       },
-      {
-        id: 1, label: "Routes", icon: <InboxIcon />, uri: ROUTES.PATH, open: false,
-        children: []
-      },
-      {
-        id: 2, label: "Bus", icon: <InboxIcon />, uri: ROUTES.BUS, open: false,
-        children: [
-          { id: 0, label: "Add", icon: <InboxIcon />, uri: ROUTES.ADD },
-          { id: 1, label: "Details", icon: <InboxIcon />, uri: ROUTES.DETAILS },
-        ]
-      },
-      {
-        id: 3, label: "Fuel", icon: <InboxIcon />, uri: ROUTES.FUEL, open: false,
-        children: []
-      },
-      {
-        id: 4, label: "Crashanalytic", icon: <InboxIcon />, uri: ROUTES.CRASHANALYTIC, open: false,
-        children: []
-      },
+      // {
+      //   id: 1, label: "Routes", icon: <InboxIcon />, uri: ROUTES.PATH, open: false,
+      //   children: []
+      // },
+      // {
+      //   id: 2, label: "Bus", icon: <InboxIcon />, uri: ROUTES.BUS, open: false,
+      //   children: [
+      //     { id: 0, label: "Add", icon: <InboxIcon />, uri: ROUTES.ADD },
+      //     { id: 1, label: "Details", icon: <InboxIcon />, uri: ROUTES.DETAILS },
+      //   ]
+      // },
+      // {
+      //   id: 3, label: "Fuel", icon: <InboxIcon />, uri: ROUTES.FUEL, open: false,
+      //   children: []
+      // },
+      // {
+      //   id: 4, label: "Crashanalytic", icon: <InboxIcon />, uri: ROUTES.CRASHANALYTIC, open: false,
+      //   children: []
+      // },
       {
         id: 5, label: "About ", icon: <InboxIcon />, uri: ROUTES.ABOUT, open: false,
         children: []
@@ -164,7 +164,7 @@ class PersistentDrawerLeft extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap style={{ flexGrow: 1 }}>
-              SaVy
+              Kunu
             </Typography>
             <Link to={ROUTES.PROFILE}>
               <Button>
