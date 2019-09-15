@@ -19,11 +19,15 @@ class MapContainer extends Component {
         super(props);
 
         this.state = {
-            places: [],
-            garbageType: [],
-            reportCount: [],
-            clickNum: ''
-
+            places: [
+                {   _id:'',
+                    latitude:0,
+                    longitude:0,
+                    garbageType:'',
+                    reportCount:'',
+                }
+            ],
+            clickNum:0
         }
     }
 
@@ -69,8 +73,19 @@ class MapContainer extends Component {
     }
 
     componentDidMount() {
+<<<<<<< HEAD
         db.collection("locations")
             .get()
+=======
+        db.collection("gpsData")
+            .onSnapshot((data)=>{
+               let mapped = data.docs.map(doc => {
+                  return{...doc.data(),id:doc.id};
+                });
+                console.log(mapped);
+            });
+            /* .get()
+>>>>>>> 09481bc90540fcd3638e9c9d5824d3c878a215e0
             .then(querySnapshot => {
                 const data = querySnapshot.docs.map(doc => {
                     console.log(doc.data);
@@ -89,14 +104,23 @@ class MapContainer extends Component {
                     return data.lon;
                 }); const newReportCountData = data.map(data => {
                     return data.reportCount;
+<<<<<<< HEAD
                 }); */
                 /* this.setState({
                     places: [...newLocationData],
                     garbageType: [...newGarbageTypeData],
                     reportCount: [...newReportCountData]
                 }) */ // array of cities objects
+=======
+                });
+             */    /*this.setState({
+                    places: [...newLocationData],
+                    garbageType: [...newGarbageTypeData],
+                    reportCount: [...newReportCountData]
+                   }) */
+>>>>>>> 09481bc90540fcd3638e9c9d5824d3c878a215e0
                 //console.log(this.state.garbageType);
-            });
+            //});
     }
 
 
@@ -118,19 +142,19 @@ class MapContainer extends Component {
                         <div>
                             <div>
                                 Type of Garbage =
-                            {this.state.garbageType[this.state.clickNum]}
+                            {this.state.places[this.state.clickNum].garbageType}
 
                             </div>
                             <div>
                                 Number of Reported  =
-                        {this.state.reportCount[this.state.clickNum]}
+                        {this.state.places[this.state.clickNum].reportCount}
                             </div>
 
                             <button
                                 onClick={this.deleteClick}
                             >
                                 Marked as Done
-                                </button>
+                            </button>
                         </div>
 
                     </InfoWindowEx>
