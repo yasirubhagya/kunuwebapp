@@ -27,7 +27,7 @@ class MapContainer extends Component {
                     reportCount:'',
                 }
             ],
-            clickNum:0
+            clickNum: 0
         }
     }
 
