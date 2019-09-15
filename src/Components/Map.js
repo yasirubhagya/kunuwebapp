@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 //import Websocket from 'react-websocket';
 import BinImage from '../Assests/Bin.png';
+import InfoWindowEx from './InfoWindowEx';
 
 import Button from '@material-ui/core/Button';
 
@@ -89,20 +90,12 @@ class MapContainer extends Component {
                 //console.log(this.state.garbageType);
             });
     }
-    /*db.collection("cities")
-    .get()
-    .then(querySnapshot => {
-        const data = querySnapshot.docs.map(doc => doc.data());
-        console.log(data); // array of cities objects
-    });*/
 
 
     render() {
         return (
             <div>
-                {/* <Websocket url='ws://demos.kaazing.com/echo' // ws://qualonsavy.herokuapp.com/api/trackers/getAll
-                    onMessage={ .handleData.bind(this)}
-                /> */}
+
                 <Map
                     google={this.props.google}
                     zoom={8}
@@ -110,7 +103,7 @@ class MapContainer extends Component {
                     initialCenter={{ lat: 7.8731, lng: 80.7718 }}
                 >
                     {this.displayPlaces()}
-                    <InfoWindow
+                    <InfoWindowEx
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
                     >
@@ -132,7 +125,7 @@ class MapContainer extends Component {
                                 </button>
                         </div>
 
-                    </InfoWindow>
+                    </InfoWindowEx>
                 </Map>
             </div>
 

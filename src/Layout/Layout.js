@@ -17,7 +17,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import HomeIcon from '@material-ui/icons/Home';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { NavLink, Link } from 'react-router-dom';
@@ -97,7 +97,7 @@ class PersistentDrawerLeft extends React.Component {
     open: false,
     navList: [
       {
-        id: 0, label: "Home", icon: <InboxIcon />, uri: ROUTES.HOME, open: false,
+        id: 0, label: "Home", icon: <HomeIcon />, uri: ROUTES.HOME, open: false,
         children: []
       },
       // {
@@ -120,7 +120,7 @@ class PersistentDrawerLeft extends React.Component {
       //   children: []
       // },
       {
-        id: 5, label: "About ", icon: <InboxIcon />, uri: ROUTES.ABOUT, open: false,
+        id: 5, label: "About ", icon: <HomeIcon />, uri: ROUTES.ABOUT, open: false,
         children: []
       }
 
