@@ -62,6 +62,7 @@ class MapContainer extends Component {
     }
     deleteClick = (id) => {
         console.log('clicked');
+        this.setState({showingInfoWindow: false,clickNum:0})
         db.collection("locations")
             .doc(this.state.places[id].id)
             .delete()
@@ -97,6 +98,8 @@ class MapContainer extends Component {
                     initialCenter={{ lat: 7.8731, lng: 80.7718 }}
                 >
                     {this.displayPlaces()}
+                    {
+                    this.state.places.length>0?
                     <InfoWindowEx
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
@@ -113,13 +116,15 @@ class MapContainer extends Component {
                             </div>
 
                             <button
-                                onClick={this.deleteClick.bind(this,this.state.clickNum)}
+                                onClick={()=>{this.deleteClick(this.state.clickNum)}}
                             >
                                 Marked as Done
                             </button>
                         </div>
 
                     </InfoWindowEx>
+                    :null
+                    }
                 </Map>
             </div>
 
