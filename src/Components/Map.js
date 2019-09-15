@@ -20,7 +20,7 @@ class MapContainer extends Component {
 
         this.state = {
             places: [
-                {   _id:'',
+                {   id:'',
                     lat:0,
                     lon:0,
                     garbageType:'',
@@ -60,10 +60,10 @@ class MapContainer extends Component {
 
         })
     }
-    deleteClick = () => {
+    deleteClick = (id) => {
         console.log('clicked');
         db.collection("locations")
-            .doc("zwQZOE6rQGuizHsSzqq9")
+            .doc(this.state.places[id].id)
             .delete()
             .then(function () {
                 console.log("Document successfully deleted!");
@@ -113,7 +113,7 @@ class MapContainer extends Component {
                             </div>
 
                             <button
-                                onClick={this.deleteClick}
+                                onClick={this.deleteClick.bind(this,this.state.clickNum)}
                             >
                                 Marked as Done
                             </button>
