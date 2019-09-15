@@ -20,12 +20,11 @@ class MapContainer extends Component {
 
         this.state = {
             places: [
-                {
-                    _id: '',
-                    latitude: 0,
-                    longitude: 0,
-                    garbageType: '',
-                    reportCount: '',
+                {   _id:'',
+                    lat:0,
+                    lon:0,
+                    garbageType:'',
+                    reportCount:'',
                 }
             ],
             clickNum: 0
@@ -48,12 +47,13 @@ class MapContainer extends Component {
     displayPlaces = () => {
         //console.log(this.state.places);
         return this.state.places.map((place, index) => {
+            console.log(place);
             return <Marker
                 key={index}
                 id={index}
                 position={{
-                    lat: place.latitude,
-                    lng: place.longitude
+                    lat: place.lat,
+                    lng: place.lon
                 }}
                 icon={BinImage}
                 onClick={(props, marker) => this.onMarkerClick(props, marker, index)} />
@@ -73,36 +73,16 @@ class MapContainer extends Component {
 
     }
 
-    componentDidMount() {       
+    componentDidMount() {
         db.collection("locations")
-            .get()
-            .then(querySnapshot => {
-                const data = querySnapshot.docs.map(doc => {
-                    console.log(doc.data);
-                    return doc.data();
-                });
-                //console.log(data);
-                const newLatitudeData = data.map(data => {
-                    console.log(data.lat);
-                    return data.lat;
-                });
-                const newLongitudeData = data.map(data => {
-                    console.log(data.lon);
-                    return data.lon;
-                });
-                /* const newGarbageTypeData = data.map(data => {
-                    return data.lon;
-                }); const newReportCountData = data.map(data => {
-                    return data.reportCount;
-                }); */
-                /* this.setState({
-                    places: [...newLocationData],
-                    garbageType: [...newGarbageTypeData],
-                    reportCount: [...newReportCountData]
-                }) */ // array of cities objects
-                //console.log(this.state.garbageType);
-                //});
+            .onSnapshot((data)=>{
+               let maped =data.docs.map(doc=>{
+                   return {...doc.data(),id:doc.id};
+               })
+               this.setState({places:[...maped]});
+               console.log(this.state.places);
             })
+            
     }
 
 
