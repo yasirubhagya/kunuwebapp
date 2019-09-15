@@ -21,8 +21,8 @@ class MapContainer extends Component {
         this.state = {
             places: [
                 {   _id:'',
-                    latitude:0,
-                    longitude:0,
+                    lat:0,
+                    lon:0,
                     garbageType:'',
                     reportCount:'',
                 }
@@ -47,12 +47,13 @@ class MapContainer extends Component {
     displayPlaces = () => {
         //console.log(this.state.places);
         return this.state.places.map((place, index) => {
+            console.log(place);
             return <Marker
                 key={index}
                 id={index}
                 position={{
-                    lat: place.latitude,
-                    lng: place.longitude
+                    lat: place.lat,
+                    lng: place.lon
                 }}
                 icon={BinImage}
                 onClick={(props, marker) => this.onMarkerClick(props, marker, index)} />
@@ -73,54 +74,15 @@ class MapContainer extends Component {
     }
 
     componentDidMount() {
-<<<<<<< HEAD
         db.collection("locations")
-            .get()
-=======
-        db.collection("gpsData")
             .onSnapshot((data)=>{
-               let mapped = data.docs.map(doc => {
-                  return{...doc.data(),id:doc.id};
-                });
-                console.log(mapped);
-            });
-            /* .get()
->>>>>>> 09481bc90540fcd3638e9c9d5824d3c878a215e0
-            .then(querySnapshot => {
-                const data = querySnapshot.docs.map(doc => {
-                    console.log(doc.data);
-                    return doc.data();
-                });
-                //console.log(data);
-                const newLatitudeData = data.map(data => {
-                    console.log(data.lat);
-                    return data.lat;
-                });
-                const newLongitudeData = data.map(data => {
-                    console.log(data.lon);
-                    return data.lon;
-                });
-                /* const newGarbageTypeData = data.map(data => {
-                    return data.lon;
-                }); const newReportCountData = data.map(data => {
-                    return data.reportCount;
-<<<<<<< HEAD
-                }); */
-                /* this.setState({
-                    places: [...newLocationData],
-                    garbageType: [...newGarbageTypeData],
-                    reportCount: [...newReportCountData]
-                }) */ // array of cities objects
-=======
-                });
-             */    /*this.setState({
-                    places: [...newLocationData],
-                    garbageType: [...newGarbageTypeData],
-                    reportCount: [...newReportCountData]
-                   }) */
->>>>>>> 09481bc90540fcd3638e9c9d5824d3c878a215e0
-                //console.log(this.state.garbageType);
-            //});
+               let maped =data.docs.map(doc=>{
+                   return {...doc.data(),id:doc.id};
+               })
+               this.setState({places:[...maped]});
+               console.log(this.state.places);
+            })
+            
     }
 
 
