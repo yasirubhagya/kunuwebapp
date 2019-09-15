@@ -4,12 +4,12 @@ import configeration from './Firebase'
 
 const firebaseApp = firebase.initializeApp({
     // copy and paste your firebase credential here
-    apiKey: "AIzaSyDSvidnt9BGLRXtfMyuQY7yMnyTzeZIDFA",
-    authDomain: "kunu-049.firebaseapp.com",
-    databaseURL: "https://kunu-049.firebaseio.com",
-    projectId: "kunu-049",
-    storageBucket: "kunu-049.appspot.com",
-    messagingSenderId: "812284848290"
+    apiKey: "AIzaSyC7EF5InsMtdMeYZCSMNQMNI-GwquV8uBk",
+    authDomain: "activity-tracker-852cd.firebaseapp.com",
+    databaseURL: "https://activity-tracker-852cd.firebaseio.com",
+    projectId: "activity-tracker-852cd",
+    storageBucket: "activity-tracker-852cd.appspot.com",
+    messagingSenderId: "254223657376"
 
 });
 

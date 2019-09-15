@@ -57,8 +57,8 @@ class MapContainer extends Component {
     }
     deleteClick = () => {
         console.log('clicked');
-        db.collection("gpsData")
-            .doc("WqHeSSl6u9ZDt290znah")
+        db.collection("locations")
+            .doc("zwQZOE6rQGuizHsSzqq9")
             .delete()
             .then(function () {
                 console.log("Document successfully deleted!");
@@ -69,24 +69,32 @@ class MapContainer extends Component {
     }
 
     componentDidMount() {
-        db.collection("gpsData")
+        db.collection("locations")
             .get()
             .then(querySnapshot => {
-                const data = querySnapshot.docs.map(doc => doc.data());
-                //console.log(data);
-                const newLocationData = data.map(data => {
-                    return data.location;
+                const data = querySnapshot.docs.map(doc => {
+                    console.log(doc.data);
+                    return doc.data();
                 });
-                const newGarbageTypeData = data.map(data => {
-                    return data.garbageType;
+                //console.log(data);
+                const newLatitudeData = data.map(data => {
+                    console.log(data.lat);
+                    return data.lat;
+                });
+                const newLongitudeData = data.map(data => {
+                    console.log(data.lon);
+                    return data.lon;
+                });
+                /* const newGarbageTypeData = data.map(data => {
+                    return data.lon;
                 }); const newReportCountData = data.map(data => {
                     return data.reportCount;
-                });
-                this.setState({
+                }); */
+                /* this.setState({
                     places: [...newLocationData],
                     garbageType: [...newGarbageTypeData],
                     reportCount: [...newReportCountData]
-                }) // array of cities objects
+                }) */ // array of cities objects
                 //console.log(this.state.garbageType);
             });
     }
