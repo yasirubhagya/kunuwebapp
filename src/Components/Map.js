@@ -19,11 +19,15 @@ class MapContainer extends Component {
         super(props);
 
         this.state = {
-            places: [],
-            garbageType: [],
-            reportCount: [],
-            clickNum: ''
-
+            places: [
+                {   _id:'',
+                    latitude:0,
+                    longitude:0,
+                    garbageType:'',
+                    reportCount:'',
+                }
+            ],
+            clickNum:0
         }
     }
 
@@ -70,7 +74,13 @@ class MapContainer extends Component {
 
     componentDidMount() {
         db.collection("gpsData")
-            .get()
+            .onSnapshot((data)=>{
+               let mapped = data.docs.map(doc => {
+                  return{...doc.data(),id:doc.id};
+                });
+                console.log(mapped);
+            });
+            /* .get()
             .then(querySnapshot => {
                 const data = querySnapshot.docs.map(doc => doc.data());
                 //console.log(data);
@@ -82,13 +92,13 @@ class MapContainer extends Component {
                 }); const newReportCountData = data.map(data => {
                     return data.reportCount;
                 });
-                this.setState({
+             */    /*this.setState({
                     places: [...newLocationData],
                     garbageType: [...newGarbageTypeData],
                     reportCount: [...newReportCountData]
-                }) // array of cities objects
+                   }) */
                 //console.log(this.state.garbageType);
-            });
+            //});
     }
 
 
@@ -110,19 +120,19 @@ class MapContainer extends Component {
                         <div>
                             <div>
                                 Type of Garbage =
-                            {this.state.garbageType[this.state.clickNum]}
+                            {this.state.places[this.state.clickNum].garbageType}
 
                             </div>
                             <div>
                                 Number of Reported  =
-                        {this.state.reportCount[this.state.clickNum]}
+                        {this.state.places[this.state.clickNum].reportCount}
                             </div>
 
                             <button
                                 onClick={this.deleteClick}
                             >
                                 Marked as Done
-                                </button>
+                            </button>
                         </div>
 
                     </InfoWindowEx>
